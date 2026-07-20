@@ -41,6 +41,8 @@ git push origin main
 
 ```bash
 git tag -a v1.0.0 -m "Première version stable"
+git tag -a v1 -m "v1"
+
 ```
 
 ### 4. Envoyer le tag

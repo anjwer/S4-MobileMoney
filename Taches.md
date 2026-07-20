@@ -50,17 +50,51 @@
 - [x] AdminAuth.php
 
 ## cote client - operations (anjara)
-- [x] voir le solde
-    - [x] recuperer les debit et credits du compte 
-    - [x] calculer la difference
+### - [x] voir le solde
+VUE : 
+    - [x] affichage du solde actuel
 
-- [x] faire un depot 
+FONCTIONS :
+    - [x] recuperer la vue d'affichage de solde
+
+### - [x] faire un depot 
+VUE : 
     - [x] formulaire de depot 
-    - [x] fonction qui decremente le compte au depot 
 
-- [x] faire un transfert 
+FONCTIONS : 
+    - [x] fonction qui insere dans transaction "DEBIT"
+
+### - [x] faire un transfert 
+VUE : 
     - [x] formulaire de transfert 
-    - [x] fonction de transaction
 
-- [x] historique 
-    - [x] lister les historiques 
+FONCTIONS :
+    - [x] fonction de transaction
+    - [x] inserer "DEBIT"
+    - [x] inserer "CREDIT"
+
+
+### - [x] historique 
+VUE : 
+    - [x] tableau qui liste tous les historiques
+
+FONCTIONS :
+    - [x] recup par id client
+
+
+# Version 2
+## cote client 
+VUE
+- [ ] formulaire de transfert 
+    - [ ] ajouter option frais de retrait
+
+FONCTION
+    - [ ] on ajoute les frais : calcul du montant  
+    - [ ] fonction pour reconnaitre si c'est un numero d'un autre operateur
+
+
+- [ ] envoi multiple 
+    - [ ] divison du montant pour le numero
+
+FONCTION :
+    - [ ] verifier si tous les numeros sont meme operateur
