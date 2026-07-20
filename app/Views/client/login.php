@@ -8,7 +8,7 @@
             <form action="<?= base_url('client/login') ?>" method="post">
                 <div class="mb-3">
                     <label>Numéro de téléphone</label>
-                    <input type="text" name="phone" class="form-control" placeholder="03X XX XXX XX" required>
+                    <input type="text" name="telephone" class="form-control" placeholder="03X XX XXX XX" required>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Se connecter</button>
             </form>

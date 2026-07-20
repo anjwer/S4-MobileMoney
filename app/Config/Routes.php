@@ -8,7 +8,14 @@ use CodeIgniter\Router\RouteCollection;
 //$routes->get('/', 'Client\Auth::index');
 
 
-
+$routes->group('client', function($routes) { 
+    $routes->get('login', 'Clients::login');
+    $routes->post('login', 'Clients::verifierClient'); 
+    $routes->get('dashboard', 'Clients::dashboard');
+    $routes->post('depot', 'Clients\Transaction::depot');
+    $routes->post('retrait', 'Clients\Transaction::retrait');
+    $routes->post('transfert', 'Clients\Transaction::transfert');
+});
 
 
 $routes->group('operator', function($routes) {
