@@ -30,7 +30,7 @@
                                 type="text"
                                 name="telephone"
                                 class="form-control"
-                                placeholder="034 XX XXX XX"
+                                placeholder="03X XX XXX XX"
                                 required
                             >
 

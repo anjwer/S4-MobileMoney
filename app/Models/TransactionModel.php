@@ -48,4 +48,23 @@ class TransactionModel extends Model
                     ->orderBy('created_at', 'DESC')
                     ->findAll();
     }
+
+    public function genererReference(): string
+    {
+        return 'TX-' . date('YmdHis') . '-' . rand(1000,9999);
+    }
+
+    public function creerTransaction( int $idClient, int $idTypeOperation,
+        string $typeMvt, float $montant, float $frais)
+    {
+        return $this->insert([
+            'reference' => $this->genererReference(),
+            'id_client' => $idClient,
+            'id_type_operation' => $idTypeOperation,
+            'type_mvt' => $typeMvt,
+            'montant' => $montant,
+            'frais' => $frais
+        ]);
+    }
+
 }

@@ -9,12 +9,8 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-4">
 
-                    <h5 class="fw-semibold mb-4">
-                        Effectuer un dépôt
-                    </h5>
-
+                    <h5 class="fw-semibold mb-4">Effectuer un dépôt</h5>
                     <form method="post" action="<?= base_url('client/depot') ?>">
-
                         <div class="mb-3">
                             <label class="form-label text-muted">
                                 Montant
