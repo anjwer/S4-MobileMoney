@@ -16,36 +16,47 @@
     <div class="col-3"><a href="<?= base_url('operator/prefixes') ?>" class="btn btn-primary">Voir les préfixes autorisés</a></div>
 </div>
 
-<!-- SECTION 1 : GAINS -->
-<div class="card shadow-sm mb-5 p-3">
-    <h4 class="mb-3">Situation des gains</h4>
-    <table class="table table-hover">
-        <thead class="table-light">
-            <tr>
-                <th>Type d'opération</th>
-                <th>Nb Opérations</th>
-                <th>Volume Total</th>
-                <th>Total Gains (Frais)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php $gain_total = 0;
-             foreach($gains as $g): ?>
-            <tr>
-                <td><?= $g['type_operation'] ?></td>
-                <td><?= $g['nombre_operations'] ?></td>
-                <td><?= number_format($g['volume_total'], 0, ',', ' ') ?> Ar</td>
-                <td class="fw-bold text-success"><?= number_format($g['total_gains_frais'], 0, ',', ' ') ?> Ar</td>
-            </tr>
-            <?php $gain_total += $g['total_gains_frais'];
-         endforeach; ?>
-            <tr>
-                <td>Gain Total:</td>
-                <td class="fw-bold text-success"><?= number_format($gain_total, 0, ',', ' ') ?> Ar</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<h3>Situation Opérateur Principal (032)</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Total Transfert</th>
+            <th>Commission (%)</th>
+            <th>Montant Commission</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($mon_operateur as $gain): ?>
+        <tr>
+            <td><?= number_format($gain['total_transfert'], 2) ?> Ar</td>
+            <td><?= $gain['pourcentage'] ?> %</td>
+            <td><?= number_format($gain['montant_commission'], 2) ?> Ar</td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
+<!-- 2. Situation Autres Opérateurs -->
+<h3>Situation des montants à envoyer aux autres opérateurs</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Opérateur</th>
+            <th>Total Transfert</th>
+            <th>Montant à envoyer (Net)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($autres_operateurs as $gain): ?>
+        <tr>
+            <td><?= $gain['prefixe'] ?></td>
+            <td><?= number_format($gain['total_transfert'], 2) ?> Ar</td>
+            <!-- Calcul : Total - Commission -->
+            <td><?= number_format($gain['total_transfert'] - $gain['montant_commission'], 2) ?> Ar</td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
 
 <!-- SECTION 2 : CLIENTS -->
 <div class="card shadow-sm p-3">

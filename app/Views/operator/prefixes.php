@@ -18,7 +18,7 @@
         <tbody>
             <?php foreach($prefixes as $p): ?>
             <tr>
-                <td><?= $p['prefixe'] ?></td>
+                <td><?= $p['prefixe'] ?> <?= $p['notre'] ? ' (Notre)' : '' ?></td>
                 <td><?= $p['created_at'] ?></td>
                 <td>
                     <a href="<?= base_url('operator/prefixes/delete/'.$p['id']) ?>" 
