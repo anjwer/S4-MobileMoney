@@ -9,7 +9,9 @@ DROP TABLE IF EXISTS bareme_frais;
 DROP TABLE IF EXISTS fee_slabs;
 DROP TABLE IF EXISTS type_operations;
 DROP TABLE IF EXISTS clients;
-DROP TABLE IF EXISTS prefixes CASCADE;
+DROP TABLE IF EXISTS prefixes;
+DROP TABLE IF EXISTS utilisateurs;
+
 
 PRAGMA foreign_keys = ON;
 
@@ -101,7 +103,7 @@ GROUP BY top.id, top.label;
 -- ============================================================
 
 -- Préfixes autorisés (Ex: 033, 037)
-INSERT INTO prefixes (prefixe,notre) VALUES ('032', true);
+insert into prefixes(prefixe, notre) values ('032', true), ('034', false);
 
 -- Types d'opérations
 INSERT INTO type_operations (id, code, label) VALUES 

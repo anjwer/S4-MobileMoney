@@ -26,7 +26,7 @@ $routes->group('client', function($routes) {
     $routes->post('retrait', 'Clients::effectuerRetrait');
 
     $routes->get('transfert', 'Clients::transfert');
-    $routes->post('trasnfert', 'Clients::effectuerTransfert');
+    $routes->post('transfert', 'Clients::effectuerTransfert');
 
 
     $routes->get('logout', 'Clients::logout');

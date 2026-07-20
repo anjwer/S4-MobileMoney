@@ -73,56 +73,51 @@ class TransactionService
     }
 
 
-    public function transfert(int $idExpediteur, string $telephone, float $montant)
+    public function transfert(int $idExpediteur, string $telephone, float $montant, bool $inclureFraisRetrait = false): bool
     {
-        $destinataire = $this->clientModel
-            ->where('numero_telephone', $telephone)
-            ->first();
-
-        if (! $destinataire) {
-            return false;
-        }
-        if ($destinataire['id'] == $idExpediteur) {
+        $destinataire = $this->clientModel->where('numero_telephone', $telephone)->first();
+        if (! $destinataire || $destinataire['id'] == $idExpediteur) {
             return false;
         }
 
-         $frais = $this->getFrais(3,$montant);
-        $solde = $this->getSolde($idExpediteur);
+        // Calcul des frais
+        $fraisTransfert = $this->getFrais(3, $montant);
+        $fraisRetrait = $inclureFraisRetrait ? $this->getFrais(2, $montant) : 0;
 
-        if($solde < ($montant + $frais)){
-            return false;
+        $totalFraisExpediteur = $fraisTransfert + $fraisRetrait;
+        $montantCreditDestinataire = $montant + $fraisRetrait; // Reçoit le montant + le bonus de retrait
+
+        $soldeExpediteur = $this->getSolde($idExpediteur);
+        if ($soldeExpediteur < ($montant + $totalFraisExpediteur)) {
+            return false; // Solde insuffisant
         }
 
-        $reference = $this->transactionModel->genererReference();
+        $reference = $this->genererReference();
         $db = \Config\Database::connect();
         $db->transStart();
 
-        // Débit expéditeur
-
+        // Débit Expéditeur
         $this->transactionModel->insert([
-            'reference'=>$reference,
-            'id_client'=>$idExpediteur,
-            'id_type_operation'=>3,
-            'type_mvt'=>'DEBIT',
-            'montant'=>$montant,
-            'frais'=>$frais
+            'reference'         => $reference,
+            'id_client'         => $idExpediteur,
+            'id_type_operation' => 3,
+            'type_mvt'          => 'DEBIT',
+            'montant'           => $montant + $fraisRetrait,
+            'frais'             => $fraisTransfert
         ]);
 
-
-
-        // Crédit destinataire
+        // Crédit Destinataire
         $this->transactionModel->insert([
-            'reference'=>$reference,
-            'id_client'=>$destinataire['id'],
-            'id_type_operation'=>3,
-            'type_mvt'=>'CREDIT',
-            'montant'=>$montant,
-            'frais'=>0
+            'reference'         => $reference,
+            'id_client'         => $destinataire['id'],
+            'id_type_operation' => 3,
+            'type_mvt'          => 'CREDIT',
+            'montant'           => $montantCreditDestinataire,
+            'frais'             => 0
         ]);
-
 
         $db->transComplete();
+
         return $db->transStatus();
     }
-
 }
