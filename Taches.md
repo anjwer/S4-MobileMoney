@@ -62,4 +62,4 @@
     - [ ] fonction de transaction
 
 - [ ] historique 
-    - [ ] lioster les historiques 
+    - [ ] lister les historiques 
