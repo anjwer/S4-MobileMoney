@@ -92,16 +92,11 @@ class Clients extends BaseController
         return view('client/transfert');
     }
 
-    private function genererReference()
-    {
-        return 'TX-' . date('Ymd') . '-' . rand(1000,9999);
-    }
-
     public function effectuerDepot()
     {
+        // dd('fonction appelée');
         $client = session()->get('client');
         $montant = $this->request->getPost('montant');
-
 
         $this->transactionService->depot($client['id'],$montant);
         return redirect()->to('client/dashboard');
@@ -139,8 +134,7 @@ class Clients extends BaseController
                         $montant
                     );
 
-        if(!$result)
-        {
+        if(!$result){
             return redirect()
                 ->back()
                 ->with('error','Transfert impossible');
