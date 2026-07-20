@@ -13,8 +13,8 @@
 ## template 
 
 ## cote operateur
-### model 
-- [ ] creation des models 
+### model (anjara)
+- [x] creation des models 
 
 ### view
 - [ ] 
