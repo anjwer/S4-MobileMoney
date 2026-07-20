@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\ClientModel;
 use App\Models\ClientSoldeModel;
+use App\Models\TransactionModel;
+
 
 class Clients extends BaseController
 {
@@ -49,18 +51,17 @@ class Clients extends BaseController
     }
 
     public function dashboard(){
-        // $client = session()->get('client');
-        // $model = new ClientSoldeModel();
-        // $solde = $model->find($client['id']);
-        // return view('client/dashboard', [
-        //     'solde' => $solde
-        // ]);
+        $client = session()->get('client');
+        $model = new ClientSoldeModel();
+        $solde = $model->find($client['id']);
 
-        // dd([
-        // 'path' => WRITEPATH . 'database.sqlite',
-        // 'exists' => file_exists(WRITEPATH . 'database.sqlite'),
-        // 'writable' => is_writable(WRITEPATH)
-        // ]);
+        $transaction = new TransactionModel();
+        $historique = $transaction->getByClient($client['id']);
+        return view('client/dashboard', [
+            'solde' => $solde,
+            'historique' => $historique,
+
+        ]);
     }
 
 
