@@ -99,3 +99,20 @@ FONCTION
 
 FONCTION :
     - [ ] verifier si tous les numeros sont meme operateur
+
+
+## cote operateur (jo)
+- [x] préfixes pour autres opérateurs
+- [x] commission
+- [en cours ] Situation opérateur et autres
+
+VUE 
+- [x] operator/prefixe.php
+    - [x] ajouter précision pour notre préfixe
+- [x] operator/dashboard.php
+    - [x] ajout situation autres
+    - [ ] montant chaque operateur
+    
+BASE
+- [x] ajout table booléan dans tab préfixe
+- [x] ajout table commission
