@@ -85,11 +85,11 @@ FONCTIONS :
 # Version 2
 ## cote client 
 VUE
-- [ ] formulaire de transfert 
-    - [ ] ajouter option frais de retrait
+- [x] formulaire de transfert 
+    - [x] ajouter option frais de retrait
 
 FONCTION
-    - [ ] on ajoute les frais : calcul du montant  
+    - [x] on ajoute les frais : calcul du montant  
     - [x] fonction extraire suffixe 
     - [x] fonction pour reconnaitre si c'est un numero d'un autre operateur
 
@@ -98,7 +98,7 @@ FONCTION
     - [ ] divison du montant pour le numero
 
 FONCTION :
-    - [ ] verifier si tous les numeros sont meme operateur
+    - [x] verifier si tous les numeros sont meme operateur
 
 
 ## cote operateur (jo)
