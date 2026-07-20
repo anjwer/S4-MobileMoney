@@ -49,17 +49,17 @@
 
 
 ## cote client - operations (anjara)
-- [ ] voir le solde
-    - [ ] recuperer les debit et credits du compte 
-    - [ ] calculer la difference
+- [x] voir le solde
+    - [x] recuperer les debit et credits du compte 
+    - [x] calculer la difference
 
-- [ ] faire un depot 
-    - [ ] formulaire de depot 
-    - [ ] fonction qui decremente le compte au depot 
+- [x] faire un depot 
+    - [x] formulaire de depot 
+    - [x] fonction qui decremente le compte au depot 
 
-- [ ] faire un transfert 
-    - [ ] formulaire de transfert 
-    - [ ] fonction de transaction
+- [x] faire un transfert 
+    - [x] formulaire de transfert 
+    - [x] fonction de transaction
 
-- [ ] historique 
-    - [ ] lister les historiques 
+- [x] historique 
+    - [x] lister les historiques 

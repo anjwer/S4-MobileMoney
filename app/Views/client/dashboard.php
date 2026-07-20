@@ -2,6 +2,8 @@
 
 <?= $this->section('content') ?>
 
+<a href="<?= base_url('client/logout') ?>">Deconnexion</a>
+
 <div class="container-fluid">
     <div class="row g-4 mb-4">
         <div class="col-md-4">
@@ -22,25 +24,34 @@
         <div class="col-md-8">
             <div class="card border-0 shadow-sm h-100">
                 <div class="card-body d-flex align-items-center">
+
                     <div class="row w-100 g-2">
+
                         <div class="col-md-4">
-                            <button class="btn btn-dark w-100">
+                            <a href="<?= base_url('client/depot') ?>" 
+                            class="btn btn-dark w-100">
                                 Dépôt
-                            </button>
+                            </a>
                         </div>
 
+
                         <div class="col-md-4">
-                            <button class="btn btn-outline-dark w-100">
+                            <a href="<?= base_url('client/retrait') ?>" 
+                            class="btn btn-outline-dark w-100">
                                 Retrait
-                            </button>
+                            </a>
                         </div>
 
+
                         <div class="col-md-4">
-                            <button class="btn btn-outline-secondary w-100">
+                            <a href="<?= base_url('client/transfert') ?>" 
+                            class="btn btn-outline-secondary w-100">
                                 Transfert
-                            </button>
+                            </a>
                         </div>
+
                     </div>
+
                 </div>
             </div>
         </div>

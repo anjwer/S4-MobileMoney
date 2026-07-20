@@ -6,9 +6,20 @@ use App\Models\ClientModel;
 use App\Models\ClientSoldeModel;
 use App\Models\TransactionModel;
 
+use App\Services\TransactionService;
+
 
 class Clients extends BaseController
 {
+
+    protected $transactionService;
+
+
+    public function __construct()
+    {
+        $this->transactionService = new TransactionService();
+    }
+
     public function login(){
         return view('client/login');
     }
@@ -64,5 +75,85 @@ class Clients extends BaseController
         ]);
     }
 
+    public function depot()
+    {
+        return view('client/depot');
+    }
 
+
+    public function retrait()
+    {
+        return view('client/retrait');
+    }
+
+
+    public function transfert()
+    {
+        return view('client/transfert');
+    }
+
+    private function genererReference()
+    {
+        return 'TX-' . date('Ymd') . '-' . rand(1000,9999);
+    }
+
+    public function effectuerDepot()
+    {
+        $client = session()->get('client');
+        $montant = $this->request->getPost('montant');
+
+
+        $this->transactionService->depot($client['id'],$montant);
+        return redirect()->to('client/dashboard');
+    }
+
+   public function effectuerRetrait()
+    {
+        $client = session()->get('client');
+        $montant = $this->request->getPost('montant');
+
+        $result = $this->transactionService
+                    ->retrait($client['id'],$montant);
+
+        if(!$result) {
+            return redirect()
+                ->back()
+                ->with('error','Solde insuffisant');
+        }
+
+
+        return redirect()->to('client/dashboard');
+
+    }
+
+    public function effectuerTransfert()
+    {
+        $client = session()->get('client');
+        $telephone = $this->request->getPost('telephone');
+        $montant = $this->request->getPost('montant');
+
+        $result = $this->transactionService
+                    ->transfert(
+                        $client['id'],
+                        $telephone,
+                        $montant
+                    );
+
+        if(!$result)
+        {
+            return redirect()
+                ->back()
+                ->with('error','Transfert impossible');
+        }
+
+        return redirect()
+            ->to('client/dashboard');
+
+    }
+
+    public function logout()
+    {
+        session()->destroy();
+        return redirect()->to('client/login')->with('success', 'Vous avez été déconnecté avec succès.');
+    }
 }
