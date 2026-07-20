@@ -162,6 +162,9 @@ class Clients extends BaseController
 
     public function calculerFrais($montant){
         // pour un transfert
-        return $transactionService->getFrais(3, $montant);
+        $frais = $transactionService->getFrais(3, $montant);
+        return $this->response->setJSON([
+            'frais' => $frais
+        ]);
     }
 }
