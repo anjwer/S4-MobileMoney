@@ -8,6 +8,7 @@ class PrefixeModel extends Model
 {
     protected $table = 'prefixes';
     protected $primaryKey = 'id';
+    protected $estNotre = 'notre';
     protected $useAutoIncrement = true;
     protected $allowedFields = ['prefixe'];
     protected $useTimestamps = false;

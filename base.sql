@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS bareme_frais;
 DROP TABLE IF EXISTS fee_slabs;
 DROP TABLE IF EXISTS type_operations;
 DROP TABLE IF EXISTS clients;
-DROP TABLE IF EXISTS prefixes;
+DROP TABLE IF EXISTS prefixes CASCADE;
 
 PRAGMA foreign_keys = ON;
 
@@ -23,6 +23,7 @@ CREATE TABLE utilisateurs (
 CREATE TABLE prefixes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     prefixe VARCHAR(15) NOT NULL UNIQUE,
+    notre Boolean default false,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -100,7 +101,7 @@ GROUP BY top.id, top.label;
 -- ============================================================
 
 -- Préfixes autorisés (Ex: 033, 037)
-INSERT INTO prefixes (prefixe) VALUES ('032');
+INSERT INTO prefixes (prefixe,notre) VALUES ('032', true);
 
 -- Types d'opérations
 INSERT INTO type_operations (id, code, label) VALUES 
@@ -147,4 +148,10 @@ INSERT INTO transactions (reference, id_client, id_type_operation, type_mvt, mon
 ('TXN006', 3, 3, 'DEBIT', 7000, 150);
 
 INSERT INTO utilisateurs (email, mdp) VALUES 
-('admin@mvola.com', '123456'); -- Note: In a real application, passwords should be hashed for security.
+('admin@mvola.com', '123456');
+
+CREATE TABLE IF NOT EXISTS commission (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    migration VARCHAR(255) NOT NULL,
+    batch INTEGER NOT NULL
+);
