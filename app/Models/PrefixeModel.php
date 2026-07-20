@@ -25,4 +25,13 @@ class PrefixeModel extends Model
     ];
 
     protected $skipValidation = false;
+
+    public function extrairePrefixe($numero) {
+        return substr($numero, 0, 3);
+    }
+
+    public function estNotre($numero) {
+        $pref = extrairePrefixe($numero);
+        return ($pref == $this->where(''));
+    }
 }

@@ -11,7 +11,6 @@ use App\Models\ClientSoldeModel;
 
 class TransactionService
 {
-
     protected $transactionModel;
     protected $clientModel;
     protected $baremeModel;

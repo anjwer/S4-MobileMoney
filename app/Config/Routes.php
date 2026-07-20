@@ -11,6 +11,11 @@ $routes->get('/', 'Home::index');
 $routes->group('client', function($routes) { 
     $routes->get('login', 'Clients::login');
     $routes->post('login', 'Clients::verifierClient'); 
+
+    $routes->post('verifierNumero', 'Clients::verifierNumero'); 
+    $routes->post('calculerFrais', 'Clients::calculerFrais'); 
+
+
     $routes->get('dashboard', 'Clients::dashboard');
 
 

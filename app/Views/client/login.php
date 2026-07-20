@@ -7,8 +7,11 @@
             <h3 class="text-center mb-4">Connexion Client</h3>
             <form action="<?= base_url('client/login') ?>" method="post">
                 <div class="mb-3">
-                    <label>Numéro de téléphone</label>
-                    <input type="text" name="telephone" class="form-control" placeholder="03X XX XXX XX" required>
+                    <label class="form-label">Numéro de téléphone</label>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2">032</span>
+                        <input type="text" name="telephone" class="form-control" placeholder="XX XXX XX" required>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Se connecter</button>
             </form>
