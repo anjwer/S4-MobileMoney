@@ -132,3 +132,19 @@ INSERT INTO bareme_frais (id_type_operation, borne_min, borne_max, frais) VALUES
 (3, 250001, 500000, 2000),
 (3, 500001, 1000000, 3000),
 (3, 1000001, 2000000, 3500);
+
+INSERT INTO clients (numero_telephone, code_secret) VALUES 
+('0321234567', 'secret1'),
+('0322345678', 'secret2'),
+('0323456789', 'secret3');
+
+INSERT INTO transactions (reference, id_client, id_type_operation, type_mvt, montant, frais) VALUES
+('TXN001', 1, 2, 'CREDIT', 5000, 0),
+('TXN002', 1, 3, 'DEBIT', 2000, 75),
+('TXN003', 2, 2, 'CREDIT', 10000, 0),
+('TXN004', 2, 3, 'DEBIT', 5000, 75),
+('TXN005', 3, 2, 'CREDIT', 15000, 0),
+('TXN006', 3, 3, 'DEBIT', 7000, 150);
+
+INSERT INTO utilisateurs (email, mdp) VALUES 
+('admin@mvola.com', '123456'); -- Note: In a real application, passwords should be hashed for security.
