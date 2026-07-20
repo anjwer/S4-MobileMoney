@@ -9,12 +9,12 @@ use CodeIgniter\Router\RouteCollection;
 
 
 $routes->group('client', function($routes) { 
-    $routes->get('login', 'Client\Auth::index');
-    $routes->post('login', 'Client\Auth::login'); 
-    $routes->get('dashboard', 'Client\Account::index');
-    $routes->post('depot', 'Client\Transaction::depot');
-    $routes->post('retrait', 'Client\Transaction::retrait');
-    $routes->post('transfert', 'Client\Transaction::transfert');
+    $routes->get('login', 'Clients::login');
+    $routes->post('login', 'Clients::verifierClient'); 
+    $routes->get('dashboard', 'Clients::dashboard');
+    $routes->post('depot', 'Clients\Transaction::depot');
+    $routes->post('retrait', 'Clients\Transaction::retrait');
+    $routes->post('transfert', 'Clients\Transaction::transfert');
 });
 
 

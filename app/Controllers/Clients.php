@@ -7,14 +7,61 @@ use App\Models\ClientSoldeModel;
 
 class Clients extends BaseController
 {
-    public function index(){
-        return view('index');
+    public function login(){
+        return view('client/login');
     }
 
-    public function solde($id_client)
-    {
-        $model = new ClientSoldeModel();
-        $solde = $model->find($id_client);
-        return $solde;
+
+    public function verifierClient(){
+        $model = new ClientModel();
+        $numeroTelephone = $this->request->getPost('telephone');
+
+        $client = $model->where('numero_telephone', $numeroTelephone)->first();
+        if (!$client) {
+            $codeSecret = password_hash('0000', PASSWORD_DEFAULT);
+            $data = [
+                'numero_telephone' => $numeroTelephone,
+                'code_secret' => $codeSecret
+            ];
+
+             if (!$model->insert($data)) {
+                dd($model->errors());
+            }
+
+
+            $client = [
+                'id' => $model->getInsertID(),
+                'numero_telephone' => $numeroTelephone,
+                'code_secret' => $codeSecret
+            ];
+
+        }
+        $this->creerSession($client);
+        return redirect()->to('client/dashboard');
     }
+
+    function creerSession($client){
+        session()->set('client',[
+            'id' => $client['id'],
+            'numero' => $client['numero_telephone'],
+            'code_secret' => $client['code_secret']
+        ]);
+    }
+
+    public function dashboard(){
+        // $client = session()->get('client');
+        // $model = new ClientSoldeModel();
+        // $solde = $model->find($client['id']);
+        // return view('client/dashboard', [
+        //     'solde' => $solde
+        // ]);
+
+        // dd([
+        // 'path' => WRITEPATH . 'database.sqlite',
+        // 'exists' => file_exists(WRITEPATH . 'database.sqlite'),
+        // 'writable' => is_writable(WRITEPATH)
+        // ]);
+    }
+
+
 }
