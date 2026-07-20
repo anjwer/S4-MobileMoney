@@ -5,10 +5,10 @@
 - [ ] arranger les configs (jo)
 
 ## base (anjara)
-- [ ] conception base 
-- [ ] initialisation sqlite 
-    - [ ] creation des migrations 
-    - [ ] creation des seeders
+- [x] conception base 
+- [x] initialisation sqlite 
+    - [x] creation des migrations 
+    - [x] creation des seeders
 
 ## template 
 
