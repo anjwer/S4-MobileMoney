@@ -13,9 +13,7 @@ $routes->group('client', function($routes) {
     $routes->post('login', 'Clients::verifierClient'); 
     $routes->get('dashboard', 'Clients::dashboard');
 
-$routes->get('admin/login', 'AdminAuth::index');
-$routes->post('admin/login', 'AdminAuth::login');
-$routes->get('admin/logout', 'AdminAuth::logout');
+
     $routes->get('depot', 'Clients::depot');
     $routes->post('depot', 'Clients::effectuerDepot');
 
@@ -29,6 +27,10 @@ $routes->get('admin/logout', 'AdminAuth::logout');
     $routes->get('logout', 'Clients::logout');
 
 });
+
+$routes->get('admin/login', 'AdminAuth::index');
+$routes->post('admin/login', 'AdminAuth::login');
+$routes->get('admin/logout', 'AdminAuth::logout');
 
 $routes->group('operator', ['filter' => 'adminAuth'], function($routes) {
     $routes->get('dashboard', 'Operator\Dashboard::index');
