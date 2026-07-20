@@ -26,4 +26,5 @@ class ClientModel extends Model
     ];
 
     protected $skipValidation = false;
+
 }
