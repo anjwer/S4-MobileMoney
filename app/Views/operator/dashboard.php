@@ -16,6 +16,7 @@
     <div class="col-3"><a href="<?= base_url('operator/prefixes') ?>" class="btn btn-primary">Voir les préfixes autorisés</a></div>
 </div>
 
+
 <!-- SECTION 1 : GAINS -->
 <div class="card shadow-sm mb-5 p-3">
     <h4 class="mb-3">Situation des gains</h4>
