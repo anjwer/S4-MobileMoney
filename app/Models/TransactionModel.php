@@ -42,4 +42,10 @@ class TransactionModel extends Model
     ];
 
     protected $skipValidation = false;
+
+    public function getByClient($idClient) {
+        return $this->where('id_client', $idClient)
+                    ->orderBy('created_at', 'DESC')
+                    ->findAll();
+    }
 }

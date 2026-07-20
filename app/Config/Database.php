@@ -59,20 +59,12 @@ class Database extends Config
      * @var array<string, mixed>
      */
     public array $default = [
-        'database'    => WRITEPATH . '/database.sqlite',
-        'DBDriver'    => 'SQLite3',
-        'DBPrefix'    => '',
-        'DBDebug'     => true,
-        'swapPre'     => '',
-        'failover'    => [],
-        'foreignKeys' => true,
-        'busyTimeout' => 1000,
-        'synchronous' => null,
-        'dateFormat'  => [
-            'date'     => 'Y-m-d',
-            'datetime' => 'Y-m-d H:i:s',
-            'time'     => 'H:i:s',
-        ],
+        'DSN'      => '',
+        'hostname' => '',
+        'username' => '',
+        'password' => '',
+        'database' => WRITEPATH . 'database.sqlite',
+        'DBDriver' => 'SQLite3',
     ];
 
     //    /**

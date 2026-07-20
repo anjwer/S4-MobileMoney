@@ -8,10 +8,27 @@ use CodeIgniter\Router\RouteCollection;
 //$routes->get('/', 'Client\Auth::index');
 
 
+$routes->group('client', function($routes) { 
+    $routes->get('login', 'Clients::login');
+    $routes->post('login', 'Clients::verifierClient'); 
+    $routes->get('dashboard', 'Clients::dashboard');
 
 $routes->get('admin/login', 'AdminAuth::index');
 $routes->post('admin/login', 'AdminAuth::login');
 $routes->get('admin/logout', 'AdminAuth::logout');
+    $routes->get('depot', 'Clients::depot');
+    $routes->post('depot', 'Clients::effectuerDepot');
+
+    $routes->get('retrait', 'Clients::retrait');
+    $routes->post('retrait', 'Clients::effectuerRetrait');
+
+    $routes->get('transfert', 'Clients::transfert');
+    $routes->post('trasnfert', 'Clients::effectuerTransfert');
+
+
+    $routes->get('logout', 'Clients::logout');
+
+});
 
 $routes->group('operator', ['filter' => 'adminAuth'], function($routes) {
     $routes->get('dashboard', 'Operator\Dashboard::index');
