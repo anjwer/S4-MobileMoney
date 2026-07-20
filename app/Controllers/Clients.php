@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Models\ClientModel;
 use App\Models\ClientSoldeModel;
 use App\Models\TransactionModel;
+use App\Models\PrefixeModel;
+
 
 use App\Services\TransactionService;
 
@@ -115,8 +117,6 @@ class Clients extends BaseController
                 ->back()
                 ->with('error','Solde insuffisant');
         }
-
-
         return redirect()->to('client/dashboard');
 
     }
@@ -149,5 +149,19 @@ class Clients extends BaseController
     {
         session()->destroy();
         return redirect()->to('client/login')->with('success', 'Vous avez été déconnecté avec succès.');
+    }
+
+    public function verifierNumero()
+    {
+        $numero = $this->request->getPost('telephone');
+        $prefixeModel = new PrefixeModel();
+        return $this->response->setJSON([
+            'notre_operateur' => $prefixeModel->estNotre($numero)
+        ]);
+    }
+
+    public function calculerFrais($montant){
+        // pour un transfert
+        return $transactionService->getFrais(3, $montant);
     }
 }

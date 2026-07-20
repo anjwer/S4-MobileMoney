@@ -90,7 +90,8 @@ VUE
 
 FONCTION
     - [ ] on ajoute les frais : calcul du montant  
-    - [ ] fonction pour reconnaitre si c'est un numero d'un autre operateur
+    - [x] fonction extraire suffixe 
+    - [x] fonction pour reconnaitre si c'est un numero d'un autre operateur
 
 
 - [ ] envoi multiple 
