@@ -2,14 +2,19 @@
 
 <?= $this->section('content') ?>
 
-<div>
-    <h2 class="mb-2">Dashboard Opérateur </h2>
-    <div class="mb-3 d-flex justify-content-end">
+<div class="row">
+    <div class="col-8">
+        <h2 class="mb-1">Dashboard Opérateur </h2>
+    </div>
+    <div class="col-4 d-flex justify-content-end">
         <a href="<?= base_url('operator/logout') ?>" class="btn btn-outline-danger">Deconnexion</a>
     </div>
 </div>
-.
-<div><a href="<?= base_url('operator/frais') ?>" class="btn btn-danger">Voir plages de frais</a></div><div><a href="<?= base_url('operator/prefixes') ?>" class="btn btn-primary">Voir les préfixes autorisés</a></div>
+
+<div class="row">
+    <div class="col-3"><a href="<?= base_url('operator/frais') ?>" class="btn btn-danger">Voir plages de frais</a></div>
+    <div class="col-3"><a href="<?= base_url('operator/prefixes') ?>" class="btn btn-primary">Voir les préfixes autorisés</a></div>
+</div>
 
 <!-- SECTION 1 : GAINS -->
 <div class="card shadow-sm mb-5 p-3">
