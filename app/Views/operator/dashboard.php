@@ -10,5 +10,4 @@
         </div>
     </div>
 </div>
-<!-- Ajoute ici tes autres widgets de statistiques -->
 <?= $this->endSection() ?>
