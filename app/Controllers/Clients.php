@@ -29,7 +29,10 @@ class Clients extends BaseController
 
     public function verifierClient(){
         $model = new ClientModel();
-        $numeroTelephone = $this->request->getPost('telephone');
+        $pref = new PrefixeModel();
+        $notrePrefixe = $pref->getNotre();
+
+        $numeroTelephone = $notrePrefixe['prefixe'] . $this->request->getPost('telephone');
 
         $client = $model->where('numero_telephone', $numeroTelephone)->first();
         if (!$client) {
@@ -121,28 +124,51 @@ class Clients extends BaseController
 
     }
 
+    // public function effectuerTransfert()
+    // {
+    //     $client = session()->get('client');
+    //     $telephone = $this->request->getPost('telephone');
+    //     $montant = $this->request->getPost('montant');
+
+    //     $result = $this->transactionService
+    //                 ->transfert(
+    //                     $client['id'],
+    //                     $telephone,
+    //                     $montant
+    //                 );
+
+    //     if(!$result){
+    //         return redirect()
+    //             ->back()
+    //             ->with('error','Transfert impossible');
+    //     }
+
+    //     return redirect()
+    //         ->to('client/dashboard');
+
+    // }
+
     public function effectuerTransfert()
     {
         $client = session()->get('client');
         $telephone = $this->request->getPost('telephone');
-        $montant = $this->request->getPost('montant');
+        $montant = (float) $this->request->getPost('montant');
+        $inclureFraisRetrait = $this->request->getPost('inclure_frais_retrait') === '1';
 
-        $result = $this->transactionService
-                    ->transfert(
-                        $client['id'],
-                        $telephone,
-                        $montant
-                    );
+        $result = $this->transactionService->transfert(
+            $client['id'],
+            $telephone,
+            $montant,
+            $inclureFraisRetrait
+        );
 
-        if(!$result){
+        if (! $result) {
             return redirect()
                 ->back()
-                ->with('error','Transfert impossible');
+                ->with('error', 'Transfert impossible (Solde insuffisant ou numéro invalide)');
         }
 
-        return redirect()
-            ->to('client/dashboard');
-
+        return redirect()->to('client/dashboard')->with('success', 'Transfert effectué avec succès');
     }
 
     public function logout()
@@ -154,17 +180,44 @@ class Clients extends BaseController
     public function verifierNumero()
     {
         $numero = $this->request->getPost('telephone');
+
+        // Vérification de base : si le numéro fait moins de 3 caractères
+        if (empty($numero) || strlen($numero) < 3) {
+            return $this->response->setJSON([
+                'notre_operateur' => false
+            ]);
+        }
+
         $prefixeModel = new PrefixeModel();
         return $this->response->setJSON([
             'notre_operateur' => $prefixeModel->estNotre($numero)
         ]);
     }
 
-    public function calculerFrais($montant){
-        // pour un transfert
-        $frais = $transactionService->getFrais(3, $montant);
+    // public function calculerFrais($montant){
+    //     // pour un transfert
+    //     $frais = $this->$transactionService->getFrais(3, $montant);
+    //     return $this->response->setJSON([
+    //         'frais' => $frais
+    //     ]);
+    // }
+
+    public function calculerFrais()
+    {
+        $montant = (float) $this->request->getPost('montant');
+        $inclureRetrait = $this->request->getPost('inclure_retrait') === 'true';
+
+        $fraisTransfert = $this->transactionService->getFrais(3, $montant);
+
+        $fraisRetrait = 0;
+        if ($inclureRetrait) {
+            $fraisRetrait = $this->transactionService->getFrais(2, $montant);
+        }
+
         return $this->response->setJSON([
-            'frais' => $frais
+            'frais_transfert' => $fraisTransfert,
+            'frais_retrait'   => $fraisRetrait,
+            'total_frais'     => $fraisTransfert + $fraisRetrait
         ]);
     }
 }

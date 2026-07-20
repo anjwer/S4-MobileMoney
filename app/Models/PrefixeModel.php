@@ -31,8 +31,19 @@ class PrefixeModel extends Model
         return substr($numero, 0, 3);
     }
 
-    public function estNotre($numero) {
-        $pref = extrairePrefixe($numero);
-        return ($pref == $this->where(''));
+    public function estNotre($numero){
+        $prefixe = $this->extrairePrefixe($numero);
+
+        // Cherche si ce préfixe existe ET appartient à notre réseau (notre = 1)
+        $result = $this->where('prefixe', $prefixe)
+                       ->where('notre', 1)
+                       ->first();
+
+        return !empty($result);
     }
+
+    public function getNotre() {
+        return $this->where('notre', 1)->first();
+    }
+
 }
