@@ -1,0 +1,9 @@
+Views/
+│   ├── layout/
+│   │   └── main.php            // Template Bootstrap commun
+│   ├── operator/               
+│   │   ├── dashboard.php
+│   │   └── ...
+│   └── client/                 
+│       ├── login.php
+│       └── dashboard.php
