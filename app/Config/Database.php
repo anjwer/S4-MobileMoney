@@ -59,7 +59,7 @@ class Database extends Config
      * @var array<string, mixed>
      */
     public array $default = [
-        'database'    => 'WRITEPATH/database.sqlite',
+        'database'    => WRITEPATH . '/database.sqlite',
         'DBDriver'    => 'SQLite3',
         'DBPrefix'    => '',
         'DBDebug'     => true,
