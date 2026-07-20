@@ -152,6 +152,22 @@ INSERT INTO utilisateurs (email, mdp) VALUES
 
 CREATE TABLE IF NOT EXISTS commission (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    migration VARCHAR(255) NOT NULL,
-    batch INTEGER NOT NULL
+    id_prefixe INTEGER NOT NULL,
+    pourcentage DECIMAL(5,2) NOT NULL,
+    FOREIGN KEY (id_prefixe) REFERENCES prefixes(id) ON DELETE CASCADE
 );
+
+INSERT INTO commission (pourcentage, id_prefixe) VALUES 
+(1.5, 2); -- 1.5% pour 033
+
+CREATE VIEW IF NOT EXISTS v_operateur_gains2 AS
+SELECT 
+    p.prefixe, 
+    SUM(t.montant) as total_transfert,
+    c.pourcentage,
+    (SUM(t.montant) * c.pourcentage / 100) as montant_commission
+FROM transactions t
+JOIN clients cl ON t.id_client = cl.id
+JOIN prefixes p ON p.prefixe = SUBSTR(cl.numero_telephone, 1, 3)
+LEFT JOIN commission c ON p.id = c.id_prefixe
+GROUP BY p.prefixe;
