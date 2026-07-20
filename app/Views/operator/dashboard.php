@@ -7,7 +7,7 @@
         <h2 class="mb-1">Dashboard Opérateur </h2>
     </div>
     <div class="col-4 d-flex justify-content-end">
-        <a href="<?= base_url('operator/logout') ?>" class="btn btn-outline-danger">Deconnexion</a>
+        <a href="<?= base_url('admin/logout') ?>" class="btn btn-outline-danger">Deconnexion</a>
     </div>
 </div>
 

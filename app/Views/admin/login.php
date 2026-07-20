@@ -18,4 +18,5 @@
             </div>
         </div>
     </div>
+    <a href="<?= base_url() ?>" class="btn btn-link">Retour à l'accueil</a>
 <?= $this->endSection() ?>
