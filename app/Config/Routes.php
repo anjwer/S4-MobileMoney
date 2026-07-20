@@ -20,8 +20,8 @@ $routes->group('client', function($routes) {
 
 $routes->group('operator', function($routes) {
     $routes->get('dashboard', 'Operator\Dashboard::index'); 
-    $routes->get('fees', 'Operator\Fees::index');
-    $routes->post('fees/save', 'Operator\Fees::save'); 
+    $routes->get('frais', 'Operator\Frais::index');
+    $routes->post('frais/save', 'Operator\Frais::save'); 
     $routes->get('prefixes', 'Operator\Prefix::index');
     $routes->post('prefixes/add', 'Operator\Prefix::add');
 });
