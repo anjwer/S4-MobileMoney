@@ -26,7 +26,7 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($mon_operateur as $gain): ?>
+        <?php foreach ($autres_operateurs as $gain): ?>
         <tr>
             <td><?= number_format($gain['total_transfert'], 2) ?> Ar</td>
             <td><?= $gain['pourcentage'] ?> %</td>
@@ -47,7 +47,7 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($autres_operateurs as $gain): ?>
+        <?php foreach ($mon_operateur as $gain): ?>
         <tr>
             <td><?= $gain['prefixe'] ?></td>
             <td><?= number_format($gain['total_transfert'], 2) ?> Ar</td>
