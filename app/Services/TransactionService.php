@@ -76,7 +76,25 @@ class TransactionService
     public function transfert(int $idExpediteur, string $telephone, float $montant, bool $inclureFraisRetrait = false): bool
     {
         $destinataire = $this->clientModel->where('numero_telephone', $telephone)->first();
-        if (! $destinataire || $destinataire['id'] == $idExpediteur) {
+        
+        // --- Validation commentée comme demandé ---
+        // if (! $destinataire || $destinataire['id'] == $idExpediteur) {
+        //     return false;
+        // }
+        
+        $idDestinataire = 0;
+        if (!$destinataire) {
+            // Création à la volée car on a ignoré la vérification 
+            $this->clientModel->insert([
+                'numero_telephone' => $telephone,
+                'code_secret' => password_hash('0000', PASSWORD_DEFAULT)
+            ]);
+            $idDestinataire = $this->clientModel->getInsertID();
+        } else {
+            $idDestinataire = $destinataire['id'];
+        }
+
+        if ($idDestinataire == $idExpediteur) {
             return false;
         }
 
@@ -92,7 +110,7 @@ class TransactionService
             return false; // Solde insuffisant
         }
 
-        $reference = $this->genererReference();
+        $reference = $this->transactionModel->genererReference();
         $db = \Config\Database::connect();
         $db->transStart();
 
@@ -109,7 +127,7 @@ class TransactionService
         // Crédit Destinataire
         $this->transactionModel->insert([
             'reference'         => $reference,
-            'id_client'         => $destinataire['id'],
+            'id_client'         => $idDestinataire,
             'id_type_operation' => 3,
             'type_mvt'          => 'CREDIT',
             'montant'           => $montantCreditDestinataire,

@@ -27,29 +27,30 @@
 
                     <div class="row w-100 g-2">
 
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <a href="<?= base_url('client/depot') ?>" 
                             class="btn btn-dark w-100">
                                 Dépôt
                             </a>
                         </div>
-
-
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <a href="<?= base_url('client/retrait') ?>" 
                             class="btn btn-outline-dark w-100">
                                 Retrait
                             </a>
                         </div>
-
-
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <a href="<?= base_url('client/transfert') ?>" 
                             class="btn btn-outline-secondary w-100">
                                 Transfert
                             </a>
                         </div>
-
+                        <div class="col-md-3">
+                            <a href="<?= base_url('client/transfertMultiple') ?>" 
+                            class="btn btn-secondary w-100 px-1" style="font-size: 0.9rem;">
+                                Transf. Multiple
+                            </a>
+                        </div>
                     </div>
 
                 </div>
