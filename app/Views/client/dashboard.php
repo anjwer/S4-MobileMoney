@@ -2,7 +2,9 @@
 
 <?= $this->section('content') ?>
 
-<a href="<?= base_url('client/logout') ?>">Deconnexion</a>
+<div class="col-12 d-flex justify-content-end">
+    <a href="<?= base_url('client/logout') ?>" class="btn btn-outline-danger">Déconnexion</a>
+</div>
 
 <div class="container-fluid">
     <div class="row g-4 mb-4">
@@ -74,19 +76,19 @@
                     <thead class="table-light">
                         <tr>
                             <th>Date</th>
-                            <th>Type</th>
-                            <th>Type</th>
-                            <th class="text-end">Montant</th>
+                            <th>Reference</th>
+                            <th>Operation</th>
+                            <th>Montant</th>
                         </tr>
                     </thead>
 
                     <?php if ($historique) {
                         foreach($historique as $h) { ?>
                             <tr>
+                                <td><?= $h["datet"] ?></td>
                                 <td><?= $h["reference"] ?></td>
-                                <td><?= $h["id_type_operation"] ?></td>
-                                <td><?= $h["type_mvt"] ?></td>
-                                <td><?= $h["montant"] ?></td>
+                                <td><?= $h["operation"] ?></td>
+                                <td><?= $h["montant_total"] ?></td>
 
                             </tr>
                     <?php }

@@ -83,7 +83,7 @@ FONCTIONS :
 
 
 # Version 2
-## cote client 
+## cote client (anjara)
 VUE
 - [x] formulaire de transfert 
     - [x] ajouter option frais de retrait
@@ -94,12 +94,18 @@ FONCTION
     - [x] fonction pour reconnaitre si c'est un numero d'un autre operateur
 
 
-- [ ] envoi multiple 
-    - [ ] divison du montant pour le numero
+- [x] envoi multiple 
+    - [x] divison du montant pour le numero
+    - [x] ajouter une liste de numero a envoyer 
+    
 
 FONCTION :
     - [x] verifier si tous les numeros sont meme operateur
+    - [x] insertion multiple du transfert vers les different comptes
 
+-[x] ajouter une view pour simplifier l'affichage des histo de transctions
+- [x] creation de model pour la view
+- [x] adapter les fonctions et les affichage
 
 ## cote operateur (jo)
 - [x] préfixes pour autres opérateurs
