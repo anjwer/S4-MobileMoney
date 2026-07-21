@@ -21,10 +21,9 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
         <div class="container d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
-                <a class="navbar-brand mb-0 me-2" href="#">Money Pull Up</a>
-                <a href="javascript:history.back()" class="text-white text-decoration-none" title="Retour" style="font-size: 1.25rem;">&larr;</a>
+                <a href="javascript:history.back()" class="text-white text-decoration-none" title="Retour" style="font-size: 1.25rem;"> 🠔 </a>
+                <a class="navbar-brand mb-0 me-2" href="#"> Money Pull Up</a>
             </div>
-            <a href="<?= base_url('/') ?>" class="btn btn-outline-light btn-sm">Accueil</a>
         </div>
     </nav>
 

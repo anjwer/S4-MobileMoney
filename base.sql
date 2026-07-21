@@ -173,3 +173,19 @@ JOIN clients cl ON t.id_client = cl.id
 JOIN prefixes p ON p.prefixe = SUBSTR(cl.numero_telephone, 1, 3)
 LEFT JOIN commission c ON p.id = c.id_prefixe
 GROUP BY p.prefixe;
+
+CREATE VIEW IF NOT EXISTS v_historique_client AS
+SELECT
+    t.id as id_transaction,
+    t.id_client as id_client,
+    t.reference as reference,
+    t_o.label as operation,
+    CASE
+        WHEN t.type_mvt = 'CREDIT' THEN t.montant
+        WHEN t.type_mvt = 'DEBIT' THEN -(t.montant + t.frais)
+        ELSE 0
+    END AS montant_total,
+    t.created_at as datet
+FROM transactions t
+JOIN type_operations t_o
+    ON t.id_type_operation = t_o.id;

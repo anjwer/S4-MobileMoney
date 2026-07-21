@@ -2,7 +2,9 @@
 
 <?= $this->section('content') ?>
 
-<a href="<?= base_url('client/logout') ?>">Deconnexion</a>
+<div class="col-12 d-flex justify-content-end">
+    <a href="<?= base_url('client/logout') ?>" class="btn btn-outline-danger">Déconnexion</a>
+</div>
 
 <div class="container-fluid">
     <div class="row g-4 mb-4">
@@ -60,6 +62,14 @@
 
 
     <!-- Historique -->
+
+    <form method="GET" action="<?= current_url() ?>">
+        <input type="text" name="type_mvt" placeholder="CREDIT / DEBIT" value="<?= esc($_GET['type_mvt'] ?? '') ?>">
+        <input type="date" name="date_debut" value="<?= esc($_GET['date_debut'] ?? '') ?>">
+        <button type="submit">Filtrer</button>
+        <a href="<?= current_url() ?>">Effacer</a>
+    </form>
+
     <div class="card border-0 shadow-sm">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -73,20 +83,20 @@
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th>Date</th>
-                            <th>Type</th>
-                            <th>Type</th>
-                            <th class="text-end">Montant</th>
+                            <th><?= sort_link('datet', 'Date')?></th>
+                            <th>Reference</th>
+                            <th>Operation</th>
+                            <th>Montant</th>
                         </tr>
                     </thead>
 
                     <?php if ($historique) {
                         foreach($historique as $h) { ?>
                             <tr>
+                                <td><?= $h["datet"] ?></td>
                                 <td><?= $h["reference"] ?></td>
-                                <td><?= $h["id_type_operation"] ?></td>
-                                <td><?= $h["type_mvt"] ?></td>
-                                <td><?= $h["montant"] ?></td>
+                                <td><?= $h["operation"] ?></td>
+                                <td><?= $h["montant_total"] ?></td>
 
                             </tr>
                     <?php }
