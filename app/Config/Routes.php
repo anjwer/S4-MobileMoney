@@ -28,6 +28,10 @@ $routes->group('client', function($routes) {
     $routes->get('transfert', 'Clients::transfert');
     $routes->post('transfert', 'Clients::effectuerTransfert');
 
+    $routes->get('transfertMultiple', 'Clients::transfertMultiple');
+    $routes->post('transfertMultiple', 'Clients::effectuerTransfertMultiple');
+
+
 
     $routes->get('logout', 'Clients::logout');
 

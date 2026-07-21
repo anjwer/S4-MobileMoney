@@ -165,10 +165,58 @@ class Clients extends BaseController
         if (! $result) {
             return redirect()
                 ->back()
-                ->with('error', 'Transfert impossible (Solde insuffisant ou numéro invalide)');
+                ->with('error', 'Transfert impossible (Solde insuffisant)');
         }
 
         return redirect()->to('client/dashboard')->with('success', 'Transfert effectué avec succès');
+    }
+
+    public function transfertMultiple()
+    {
+        return view('client/transfert_multiple');
+    }
+
+    public function effectuerTransfertMultiple()
+    {
+        $client = session()->get('client');
+        $telephonesPost = $this->request->getPost('telephones');
+        $montantTotal = (float) $this->request->getPost('montant');
+        $inclureFraisRetrait = $this->request->getPost('inclure_frais_retrait') === '1';
+
+        $telephones = explode(',', $telephonesPost);
+        $telephones = array_filter(array_map('trim', $telephones));
+
+        if(count($telephones) == 0) {
+            return redirect()->back()->with('error', 'Aucun destinataire');
+        }
+
+        $montantParPersonne = $montantTotal / count($telephones);
+
+        $db = \Config\Database::connect();
+        $db->transStart();
+
+        foreach ($telephones as $tel) {
+            $result = $this->transactionService->transfert(
+                $client['id'],
+                $tel,
+                $montantParPersonne,
+                $inclureFraisRetrait
+            );
+
+            if (!$result) {
+                // Should we abort all or just skip? We abort all to be consistent.
+                $db->transRollback();
+                return redirect()->back()->with('error', 'Transfert impossible pour le numéro '.$tel.'. Solde insuffisant.');
+            }
+        }
+
+        $db->transComplete();
+
+        if ($db->transStatus() === false) {
+             return redirect()->back()->with('error', 'Erreur lors du transfert multiple');
+        }
+
+        return redirect()->to('client/dashboard')->with('success', 'Transfert multiple effectué avec succès vers '.count($telephones).' numéros');
     }
 
     public function logout()
