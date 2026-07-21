@@ -6,6 +6,8 @@ use App\Models\ClientModel;
 use App\Models\TransactionModel;
 use App\Models\BaremeFraisModel;
 use App\Models\ClientSoldeModel;
+use App\Models\PromotionModel;
+
 
 
 
@@ -14,6 +16,7 @@ class TransactionService
     protected $transactionModel;
     protected $clientModel;
     protected $baremeModel;
+    protected $promotionModel;
 
 
     public function __construct()
@@ -21,6 +24,8 @@ class TransactionService
         $this->transactionModel = new TransactionModel();
         $this->clientModel = new ClientModel();
         $this->baremeModel = new BaremeFraisModel();
+        $this->promotionModel = new PromotionModel();
+
     }
 
     public function getFrais(int $idTypeOperation, float $montant): float
@@ -73,7 +78,7 @@ class TransactionService
     }
 
 
-    public function transfert(int $idExpediteur, string $telephone, float $montant, bool $inclureFraisRetrait = false): bool
+    public function transfert($idExpediteur, $telephone, $montant,  $memeOperateur, $inclureFraisRetrait = false)
     {
         $destinataire = $this->clientModel->where('numero_telephone', $telephone)->first();
         
@@ -99,7 +104,12 @@ class TransactionService
         }
 
         // Calcul des frais
-        $fraisTransfert = $this->getFrais(3, $montant);
+        $promotion = 0;
+        if ($memeOperateur ){
+            $promotion = $this->promotionModel->getFraisDeTransfert();
+        }
+        $fraisTransfert = $this->getFrais(3, $montant)* (1- $promotion["promotion"]);
+
         $fraisRetrait = $inclureFraisRetrait ? $this->getFrais(2, $montant) : 0;
 
         $totalFraisExpediteur = $fraisTransfert + $fraisRetrait;

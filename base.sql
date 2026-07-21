@@ -189,3 +189,14 @@ SELECT
 FROM transactions t
 JOIN type_operations t_o
     ON t.id_type_operation = t_o.id;
+
+
+create table promotions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_type_operation integer not null,
+    promotion numeric not null,
+    FOREIGN KEY (id_type_operation) REFERENCES type_operations(id)
+
+);
+
+insert into promotions (id_type_operation, promotion) values (3, 0.1);
