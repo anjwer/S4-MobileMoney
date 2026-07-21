@@ -134,3 +134,15 @@ CONTROLLER
     - [x] function save
         - [x] ajout de save commission
 
+
+promotion frais de trsnfert 
+meme orperatuer - % de promotion 
+- a mettre dans la base 
+
+- ajouter model 
+- recuperer la promotion du frais de transfert 
+
+- appliquer au transfert cote client 
+
+-bonus si on peut ajouter une page qui change la promotion 
+- on applique la promotion seuelemt si c'est meme operateur 

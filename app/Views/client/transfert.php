@@ -155,6 +155,7 @@
 
     function afficherTotal() {
         const montant = Number(inputMontant.value) || 0;
+        
         const total = montant + fraisTransfert + fraisRetrait;
 
         affichageFraisTransfert.innerHTML = fraisTransfert.toLocaleString() + " Ar";

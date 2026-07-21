@@ -16,12 +16,16 @@ class Clients extends BaseController
 {
 
     protected $transactionService;
+    protected $promotionModel;
 
 
     public function __construct()
     {
         $this->transactionService = new TransactionService();
+        $this->promotionModel = new PromotionModel();
+
     }
+
 
     public function login(){
         return view('client/login');
@@ -163,10 +167,18 @@ class Clients extends BaseController
         $montant = (float) $this->request->getPost('montant');
         $inclureFraisRetrait = $this->request->getPost('inclure_frais_retrait') === '1';
 
+
+        // verifier si c meme operateur 
+        $prefixeModel = new PrefixeModel();
+        
+
+        $memeOperateur = $prefixeModel->estNotre($telephone);
+
         $result = $this->transactionService->transfert(
             $client['id'],
             $telephone,
             $montant,
+            $memeOperateur,
             $inclureFraisRetrait
         );
 
@@ -260,15 +272,26 @@ class Clients extends BaseController
 
     public function calculerFrais()
     {
+        
         $montant = (float) $this->request->getPost('montant');
         $inclureRetrait = $this->request->getPost('inclure_retrait') === 'true';
 
-        $fraisTransfert = $this->transactionService->getFrais(3, $montant);
+        // $fraisTransfert = $this->transactionService->getFrais(3, $montant);
+
+        $telephone = $this->request->getPost('telephone');
+        $prefixeModel = new PrefixeModel();
+        $memeOperateur = $prefixeModel->estNotre($telephone);
 
         $fraisRetrait = 0;
         if ($inclureRetrait) {
             $fraisRetrait = $this->transactionService->getFrais(2, $montant);
         }
+
+        $promotion = 0;
+        if ($memeOperateur ){
+            $promotion = $this->promotionModel->getFraisDeTransfert();
+        }
+        $fraisTransfert = $this->transactionService->getFrais(3, $montant)* (1- $promotion["promotion"]);
 
         return $this->response->setJSON([
             'frais_transfert' => $fraisTransfert,
