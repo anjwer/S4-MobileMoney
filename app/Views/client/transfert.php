@@ -10,6 +10,18 @@
 
                     <h5 class="fw-semibold mb-4">Effectuer un transfert</h5>
 
+                    <?php if (session()->getFlashdata('error')): ?>
+                        <div class="alert alert-danger">
+                            <?= session()->getFlashdata('error') ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (session()->getFlashdata('success')): ?>
+                        <div class="alert alert-success">
+                            <?= session()->getFlashdata('success') ?>
+                        </div>
+                    <?php endif; ?>
+
                     <form method="post" action="<?= base_url('client/transfert') ?>">
                         <?= csrf_field() ?>
 
@@ -20,7 +32,11 @@
                                 id="telephone"
                                 name="telephone"
                                 class="form-control"
-                                placeholder="03X XX XXX XX"
+                                placeholder="Ex: 0340012345"
+                                minlength="10"
+                                maxlength="10"
+                                pattern="^[0-9]{10}$"
+                                title="Veuillez saisir exactement 10 chiffres"
                                 required
                             >
                             <small id="verificationNumero" class="d-block mt-1"></small>
@@ -150,8 +166,9 @@
     inputTelephone.addEventListener("input", function() {
         clearTimeout(timer);
         const numero = this.value;
-        if (numero.length < 3) {
-            zoneVerification.innerHTML = "";
+        if (numero.length !== 10) {
+            zoneVerification.className = "text-danger d-block mt-1";
+            zoneVerification.innerHTML = "Le numéro doit comporter exactement 10 chiffres.";
             afficherBlocFrais(false);
             return;
         }

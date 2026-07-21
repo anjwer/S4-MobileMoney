@@ -92,7 +92,7 @@ class TransactionService
             return false; // Solde insuffisant
         }
 
-        $reference = $this->genererReference();
+        $reference = $this->transactionModel->genererReference();
         $db = \Config\Database::connect();
         $db->transStart();
 
