@@ -1,0 +1,151 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\ClientModel;
+use App\Models\TransactionModel;
+use App\Models\BaremeFraisModel;
+use App\Models\ClientSoldeModel;
+use App\Models\PromotionModel;
+
+
+
+
+class TransactionService
+{
+    protected $transactionModel;
+    protected $clientModel;
+    protected $baremeModel;
+    protected $promotionModel;
+
+
+    public function __construct()
+    {
+        $this->transactionModel = new TransactionModel();
+        $this->clientModel = new ClientModel();
+        $this->baremeModel = new BaremeFraisModel();
+        $this->promotionModel = new PromotionModel();
+
+    }
+
+    public function getFrais(int $idTypeOperation, float $montant): float
+    {
+        $bareme = $this->baremeModel
+            ->where('id_type_operation',$idTypeOperation)
+            ->where('borne_min <=',$montant)
+            ->where('borne_max >=',$montant)
+            ->first();
+        return $bareme ? (float)$bareme['frais'] : 0;
+    }
+
+    public function getSolde($idClient){
+        $model = new ClientSoldeModel();
+        return (float) ($model->find($idClient)['solde'] ?? 0);
+    }
+
+
+    public function depot($idClient, $montant)
+    {
+        return $this->transactionModel
+            ->creerTransaction(
+                $idClient,
+                1,
+                'CREDIT',
+                $montant,
+                0
+            );
+
+    }
+
+
+    public function retrait($idClient,$montant)
+    {
+        $frais = $this->getFrais(2,$montant);
+        $solde = $this->getSolde($idClient);
+
+
+        if($solde < ($montant + $frais)){
+            return false;
+        }
+        return $this->transactionModel
+            ->creerTransaction(
+                $idClient,
+                2,
+                'DEBIT',
+                $montant,
+                $frais
+            );
+    }
+
+
+    public function transfert($idExpediteur, $telephone, $montant,  $memeOperateur, $inclureFraisRetrait = false)
+    {
+        $destinataire = $this->clientModel->where('numero_telephone', $telephone)->first();
+        
+        // --- Validation commentée comme demandé ---
+        // if (! $destinataire || $destinataire['id'] == $idExpediteur) {
+        //     return false;
+        // }
+        
+        $idDestinataire = 0;
+        if (!$destinataire) {
+            // Création à la volée car on a ignoré la vérification 
+            $this->clientModel->insert([
+                'numero_telephone' => $telephone,
+                'code_secret' => password_hash('0000', PASSWORD_DEFAULT)
+            ]);
+            $idDestinataire = $this->clientModel->getInsertID();
+        } else {
+            $idDestinataire = $destinataire['id'];
+        }
+
+        if ($idDestinataire == $idExpediteur) {
+            return false;
+        }
+
+        // Calcul des frais
+        $promotion = 0;
+        if ($memeOperateur ){
+            $promotion = $this->promotionModel->getFraisDeTransfert();
+        }
+        $fraisTransfert = $this->getFrais(3, $montant)* (1- $promotion["promotion"]);
+
+        $fraisRetrait = $inclureFraisRetrait ? $this->getFrais(2, $montant) : 0;
+
+        $totalFraisExpediteur = $fraisTransfert + $fraisRetrait;
+        $montantCreditDestinataire = $montant + $fraisRetrait; // Reçoit le montant + le bonus de retrait
+
+        $soldeExpediteur = $this->getSolde($idExpediteur);
+        if ($soldeExpediteur < ($montant + $totalFraisExpediteur)) {
+            return false; // Solde insuffisant
+        }
+
+        $reference = $this->transactionModel->genererReference();
+        $db = \Config\Database::connect();
+        $db->transStart();
+
+        // Débit Expéditeur
+        $this->transactionModel->insert([
+            'reference'         => $reference,
+            'id_client'         => $idExpediteur,
+            'id_type_operation' => 3,
+            'type_mvt'          => 'DEBIT',
+            'montant'           => $montant + $fraisRetrait,
+            'frais'             => $fraisTransfert
+        ]);
+
+        // Crédit Destinataire
+        $this->transactionModel->insert([
+            'reference'         => $reference,
+            'id_client'         => $idDestinataire,
+            'id_type_operation' => 3,
+            'type_mvt'          => 'CREDIT',
+            'montant'           => $montantCreditDestinataire,
+            'frais'             => 0
+        ]);
+
+        $db->transComplete();
+
+        return $db->transStatus();
+    }
+}
