@@ -68,12 +68,19 @@ class Clients extends BaseController
     }
 
     public function dashboard(){
+        helper('table'); // Charge le helper généré
+
         $client = session()->get('client');
         $model = new ClientSoldeModel();
         $solde = $model->find($client['id']);
 
         $histo = new HistoriqueClientModel();
-        $historique = $histo->getByClient($client['id']);
+        $queryParams = $this->request->getGet();
+
+        // $historique = $histo->getByClient($client['id']);
+
+        $historique = $histo->applyFiltersAndSort($queryParams, $histo->searchableFields, $histo->allowedSortColumns)
+                                      ->paginate(10);
         return view('client/dashboard', [
             'solde' => $solde,
             'historique' => $historique,

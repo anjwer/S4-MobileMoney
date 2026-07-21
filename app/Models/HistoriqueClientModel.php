@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Traits\FilterableTrait;
 
 class HistoriqueClientModel extends Model
 {
+
+    use FilterableTrait;
+
     protected $table = 'v_historique_client';
     protected $primaryKey = 'id_transaction';
 
@@ -18,4 +22,7 @@ class HistoriqueClientModel extends Model
                     ->orderBy('datet', 'DESC')
                     ->findAll();
     }
+
+    public array $searchableFields   = ['reference', 'operation', 'montant_total', 'datet'];
+    public array $allowedSortColumns = ['reference', 'montant_total', 'datet'];
 }

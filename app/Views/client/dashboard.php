@@ -62,6 +62,14 @@
 
 
     <!-- Historique -->
+
+    <form method="GET" action="<?= current_url() ?>">
+        <input type="text" name="type_mvt" placeholder="CREDIT / DEBIT" value="<?= esc($_GET['type_mvt'] ?? '') ?>">
+        <input type="date" name="date_debut" value="<?= esc($_GET['date_debut'] ?? '') ?>">
+        <button type="submit">Filtrer</button>
+        <a href="<?= current_url() ?>">Effacer</a>
+    </form>
+
     <div class="card border-0 shadow-sm">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -75,7 +83,7 @@
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th>Date</th>
+                            <th><?= sort_link('datet', 'Date')?></th>
                             <th>Reference</th>
                             <th>Operation</th>
                             <th>Montant</th>

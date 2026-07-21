@@ -107,6 +107,8 @@ FONCTION :
 - [x] creation de model pour la view
 - [x] adapter les fonctions et les affichage
 
+
+
 ## cote operateur (jo)
 - [x] préfixes pour autres opérateurs
 - [x] commission
