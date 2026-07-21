@@ -1,7 +1,6 @@
 <?= $this->extend('layout/main') ?>
 
 <?= $this->section('content') ?>
-<a href="<?= base_url('operator/dashboard') ?>">Retour</a>
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Configuration des Barèmes</h2>
     

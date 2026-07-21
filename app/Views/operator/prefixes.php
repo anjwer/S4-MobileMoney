@@ -1,6 +1,5 @@
 <?= $this->extend('layout/main') ?>
 <?= $this->section('content') ?>
-<a href="<?= base_url('operator/dashboard') ?>">Retour</a>
 <div class="d-flex justify-content-between mb-4">
     <h2>Gestion des Préfixes</h2>
     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPrefixe">+ Ajouter Préfixe</button>
