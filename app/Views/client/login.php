@@ -17,5 +17,8 @@
             </form>
         </div>
     </div>
+
+    <a href="<?= base_url('/') ?>">Retour à l'accueil</a>
+
 </div>
 <?= $this->endSection() ?>

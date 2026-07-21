@@ -6,6 +6,7 @@ use App\Models\ClientModel;
 use App\Models\ClientSoldeModel;
 use App\Models\TransactionModel;
 use App\Models\PrefixeModel;
+use App\Models\HistoriqueClientModel;
 
 
 use App\Services\TransactionService;
@@ -71,8 +72,8 @@ class Clients extends BaseController
         $model = new ClientSoldeModel();
         $solde = $model->find($client['id']);
 
-        $transaction = new TransactionModel();
-        $historique = $transaction->getByClient($client['id']);
+        $histo = new HistoriqueClientModel();
+        $historique = $histo->getByClient($client['id']);
         return view('client/dashboard', [
             'solde' => $solde,
             'historique' => $historique,
