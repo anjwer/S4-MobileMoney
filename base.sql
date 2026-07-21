@@ -160,7 +160,7 @@ CREATE TABLE IF NOT EXISTS commission (
 );
 
 INSERT INTO commission (pourcentage, id_prefixe) VALUES 
-(1.5, 2); -- 1.5% pour 033
+(1.5, 2); -- 1.5% pour 034
 
 CREATE VIEW IF NOT EXISTS v_operateur_gains2 AS
 SELECT 
