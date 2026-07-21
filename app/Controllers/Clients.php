@@ -7,6 +7,9 @@ use App\Models\ClientSoldeModel;
 use App\Models\TransactionModel;
 use App\Models\PrefixeModel;
 use App\Models\HistoriqueClientModel;
+use App\Models\PromotionModel;
+use App\Models\EpargneModel;
+
 
 
 use App\Services\TransactionService;
@@ -162,6 +165,8 @@ class Clients extends BaseController
 
     public function effectuerTransfert()
     {
+        $epargne = new EpargneModel();
+        $listeEpargne = $epargne->findAll();
         $client = session()->get('client');
         $telephone = $this->request->getPost('telephone');
         $montant = (float) $this->request->getPost('montant');
