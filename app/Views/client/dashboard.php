@@ -53,6 +53,12 @@
                                 Transf. Multiple
                             </a>
                         </div>
+                        <div class="col-md-3">
+                            <a href="<?= base_url('client/epargne') ?>" 
+                            class="btn btn-secondary w-100 px-1" style="font-size: 0.9rem;">
+                                Mon epargne
+                            </a>
+                        </div>
                     </div>
 
                 </div>

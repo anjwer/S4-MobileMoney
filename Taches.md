@@ -146,3 +146,9 @@ meme orperatuer - % de promotion
 
 -bonus si on peut ajouter une page qui change la promotion 
 - on applique la promotion seuelemt si c'est meme operateur 
+
+Alea2
+Epargne:
+Transfert uniquement
+    Client: interface % d'epargne - enregistrement base
+    20% epargne donc 20 dans epargne et reste solde

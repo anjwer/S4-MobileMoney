@@ -31,6 +31,8 @@ $routes->group('client', function($routes) {
     $routes->get('transfertMultiple', 'Clients::transfertMultiple');
     $routes->post('transfertMultiple', 'Clients::effectuerTransfertMultiple');
 
+    $routes->get('epargne','Epargne::index');
+    $routes->post('epargne/save','Epargne::save');
 
 
     $routes->get('logout', 'Clients::logout');

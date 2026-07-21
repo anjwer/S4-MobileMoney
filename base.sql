@@ -200,3 +200,12 @@ create table promotions (
 );
 
 insert into promotions (id_type_operation, promotion) values (3, 0.1);
+
+create table epargne(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_client INTEGER,
+    pourcentage DECIMAL(5,2) NOT NULL,
+    FOREIGN KEY (id_client) REFERENCES clients(id)
+);
+
+insert into epargne(id_client,pourcentage) values(1,10.0);
