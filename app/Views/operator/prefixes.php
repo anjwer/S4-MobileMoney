@@ -37,6 +37,8 @@
             <div class="modal-body">
                 <label>Nouveau Préfixe (ex: 032)</label>
                 <input type="text" name="prefixe" class="form-control" maxlength="3" required>
+                <label>Commission (%)</label>
+                <input type="number" name="commission" class="form-control" step="0.01" min="0" max="100" required placeholder="Ex: 5.5%">
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-success">Enregistrer</button>

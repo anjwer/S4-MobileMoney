@@ -83,7 +83,7 @@ FONCTIONS :
 
 
 # Version 2
-## cote client 
+## cote client (anjara)
 VUE
 - [x] formulaire de transfert 
     - [x] ajouter option frais de retrait
@@ -106,13 +106,23 @@ FONCTION :
 - [x] commission
 - [en cours ] Situation opérateur et autres
 
+MODEL
+- [x] CommissionModel.php
+
 VUE 
 - [x] operator/prefixe.php
     - [x] ajouter précision pour notre préfixe
+    - [x] ajout input commission
 - [x] operator/dashboard.php
     - [x] ajout situation autres
     - [ ] montant chaque operateur
-    
+
 BASE
 - [x] ajout table booléan dans tab préfixe
 - [x] ajout table commission
+
+CONTROLLER
+- [x] Prefixe.php
+    - [x] function save
+        - [x] ajout de save commission
+
